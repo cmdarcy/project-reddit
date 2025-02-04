@@ -1,15 +1,27 @@
 const posts = [];
 
 const submitBtn = document.getElementsByClassName("submitPostbtn")[0];
-const postContainer = document.getElementsByClassName("posts")[0];
+const postsContainer = document.getElementsByClassName("posts")[0];
 
 const renderPosts = () => {
-	let postsElements = "";
-	posts.forEach(
-		(post) =>
-			(postsElements += `<div><p>${post.message} - posted by: ${post.name}</p></div>`)
-	);
-	postContainer.innerHTML = postsElements;
+	postsContainer.replaceChildren();
+	posts.forEach((post) => {
+		const postDiv = document.createElement("div");
+		const postP = document.createElement("p");
+		const removePostbtn = document.createElement("button");
+
+		postP.textContent = `${post.message} - posted by: ${post.name}`;
+		removePostbtn.textContent = "Delete Post";
+
+		removePostbtn.addEventListener("click", function (e) {
+			postsContainer.removeChild(e.target.parentNode);
+			posts.splice(posts.indexOf(post), 1);
+		});
+
+		postDiv.appendChild(postP);
+		postDiv.appendChild(removePostbtn);
+		postsContainer.appendChild(postDiv);
+	});
 };
 
 submitBtn.addEventListener("click", function (e) {
