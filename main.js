@@ -30,5 +30,7 @@ submitBtn.addEventListener("click", function (e) {
 	const postInputMessage =
 		document.getElementsByClassName("post-message")[0].value;
 	posts.push({ name: postInputName, message: postInputMessage, comments: [] });
+	document.getElementsByClassName("post-name")[0].value = "";
+	document.getElementsByClassName("post-message")[0].value = "";
 	renderPosts();
 });
