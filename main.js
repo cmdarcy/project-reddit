@@ -9,18 +9,93 @@ const renderPosts = () => {
 		const postDiv = document.createElement("div");
 		const postP = document.createElement("p");
 		const removePostbtn = document.createElement("button");
+		const showCommentsbtn = document.createElement("button");
+		const commentsContainer = renderCommentsContainer(post);
 
 		postP.textContent = `${post.message} - posted by: ${post.name}`;
 		removePostbtn.textContent = "Delete Post";
+		showCommentsbtn.textContent = "Show Comments";
+		postDiv.setAttribute("class", "post");
 
 		removePostbtn.addEventListener("click", function (e) {
 			postsContainer.removeChild(e.target.parentNode);
 			posts.splice(posts.indexOf(post), 1);
 		});
 
+		showCommentsbtn.addEventListener("click", function () {
+			if (commentsContainer.className === "comments-container") {
+				console.log("comments should hide");
+				commentsContainer.className = "comments-container d-none";
+			} else {
+				console.log("comments should display");
+				commentsContainer.className = "comments-container";
+			}
+		});
+
 		postDiv.appendChild(postP);
 		postDiv.appendChild(removePostbtn);
+		postDiv.appendChild(showCommentsbtn);
+		postDiv.appendChild(commentsContainer);
 		postsContainer.appendChild(postDiv);
+	});
+};
+
+const renderCommentsContainer = (post) => {
+	const commentsContainer = document.createElement("div");
+	const commentsDiv = document.createElement("div");
+	const commentsForm = document.createElement("form");
+	const commentNameInput = document.createElement("input");
+	const commentMessageInput = document.createElement("input");
+	const commentSubmitbtn = document.createElement("button");
+
+	commentSubmitbtn.textContent = "Submit Comment";
+	commentsContainer.setAttribute("class", "comments-container");
+	commentNameInput.setAttribute("placeholder", "Comment Name");
+	commentNameInput.setAttribute("class", "comment-name");
+	commentMessageInput.setAttribute("placeholder", "Comment Message");
+	commentMessageInput.setAttribute("class", "comment-message");
+
+	commentSubmitbtn.addEventListener("click", function (e) {
+		e.preventDefault();
+		const commentName =
+			e.target.parentNode.getElementsByClassName("comment-name")[0].value;
+		const commentMesage =
+			e.target.parentNode.getElementsByClassName("comment-message")[0].value;
+		post.comments.push({ name: commentName, message: commentMesage });
+		renderCommentList(post.comments, commentsDiv);
+		e.target.parentNode.getElementsByClassName("comment-name")[0].value = "";
+		e.target.parentNode.getElementsByClassName("comment-message")[0].value = "";
+	});
+
+	commentsForm.appendChild(commentNameInput);
+	commentsForm.appendChild(commentMessageInput);
+	commentsForm.appendChild(commentSubmitbtn);
+
+	renderCommentList(post.comments, commentsDiv);
+
+	commentsContainer.appendChild(commentsDiv);
+	commentsContainer.appendChild(commentsForm);
+	return commentsContainer;
+};
+
+const renderCommentList = (comments, commentsDiv) => {
+	commentsDiv.replaceChildren();
+	comments.forEach((comment) => {
+		const commentDiv = document.createElement("div");
+		const commentP = document.createElement("p");
+		const deleteCommentbtn = document.createElement("button");
+
+		commentP.textContent = `${comment.name} commented: ${comment.message}`;
+		deleteCommentbtn.textContent = "Remove Comment";
+
+		deleteCommentbtn.addEventListener("click", function (e) {
+			commentsDiv.removeChild(e.target.parentNode);
+			comments.splice(comments.indexOf(comment), 1);
+		});
+
+		commentDiv.appendChild(commentP);
+		commentDiv.appendChild(deleteCommentbtn);
+		commentsDiv.appendChild(commentDiv);
 	});
 };
 

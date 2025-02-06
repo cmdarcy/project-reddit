@@ -1,0 +1,8 @@
+/* borders are temporary for debugging before fully styling */
+.post {
+	border: 2px solid red;
+}
+
+.comments-container {
+	border: 2px solid blue;
+}
