@@ -16,6 +16,8 @@ const renderPosts = () => {
 		removePostbtn.textContent = "Delete Post";
 		showCommentsbtn.textContent = "Show Comments";
 		postDiv.setAttribute("class", "post");
+		removePostbtn.classList.add("btn", "btn-danger");
+		showCommentsbtn.classList.add("btn", "btn-outline-info");
 
 		removePostbtn.addEventListener("click", function (e) {
 			postsContainer.removeChild(e.target.parentNode);
@@ -54,6 +56,7 @@ const renderCommentsContainer = (post) => {
 	commentNameInput.setAttribute("class", "comment-name");
 	commentMessageInput.setAttribute("placeholder", "Comment Message");
 	commentMessageInput.setAttribute("class", "comment-message");
+	commentSubmitbtn.classList.add("btn", "btn-outline-primary");
 
 	commentSubmitbtn.addEventListener("click", function (e) {
 		e.preventDefault();
@@ -87,6 +90,7 @@ const renderCommentList = (comments, commentsDiv) => {
 
 		commentP.textContent = `${comment.name} commented: ${comment.message}`;
 		deleteCommentbtn.textContent = "Remove Comment";
+		deleteCommentbtn.classList.add("btn", "btn-outline-danger");
 
 		deleteCommentbtn.addEventListener("click", function (e) {
 			commentsDiv.removeChild(e.target.parentNode);
