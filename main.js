@@ -54,12 +54,15 @@ const renderPosts = () => {
 const renderCommentsContainer = (post) => {
 	const commentsContainer = document.createElement("div");
 	const commentsDiv = document.createElement("div");
+	const commentUl = document.createElement("ul");
 	const commentsForm = document.createElement("form");
 	const commentNameInput = document.createElement("input");
 	const commentMessageInput = document.createElement("input");
 	const commentSubmitbtn = document.createElement("button");
 
 	commentsContainer.classList.add("comments-container");
+	commentsDiv.classList.add("card", "mb-4");
+	commentUl.classList.add("list-group", "list-group-flush");
 	commentNameInput.classList.add("comment-name", "form-control", "mb-1");
 	commentMessageInput.classList.add("comment-message", "form-control", "mb-1");
 	commentNameInput.setAttribute("placeholder", "Comment Name");
@@ -75,7 +78,7 @@ const renderCommentsContainer = (post) => {
 		const commentMesage =
 			e.target.parentNode.getElementsByClassName("comment-message")[0].value;
 		post.comments.push({ name: commentName, message: commentMesage });
-		renderCommentList(post.comments, commentsDiv);
+		renderCommentList(post.comments, commentUl);
 		e.target.parentNode.getElementsByClassName("comment-name")[0].value = "";
 		e.target.parentNode.getElementsByClassName("comment-message")[0].value = "";
 	});
@@ -83,33 +86,34 @@ const renderCommentsContainer = (post) => {
 	commentsForm.appendChild(commentNameInput);
 	commentsForm.appendChild(commentMessageInput);
 	commentsForm.appendChild(commentSubmitbtn);
+	commentsDiv.appendChild(commentUl);
 
-	renderCommentList(post.comments, commentsDiv);
+	renderCommentList(post.comments, commentUl);
 
 	commentsContainer.appendChild(commentsDiv);
 	commentsContainer.appendChild(commentsForm);
 	return commentsContainer;
 };
 
-const renderCommentList = (comments, commentsDiv) => {
-	commentsDiv.replaceChildren();
+const renderCommentList = (comments, commentUl) => {
+	commentUl.replaceChildren();
 	comments.forEach((comment) => {
-		const commentDiv = document.createElement("div");
-		const commentP = document.createElement("p");
+		const commentLi = document.createElement("li");
 		const deleteCommentbtn = document.createElement("button");
 
-		commentP.textContent = `${comment.name} commented: ${comment.message}`;
+		commentLi.classList.add("list-group-item");
+		deleteCommentbtn.classList.add("btn", "btn-outline-danger", "mx-2");
+
+		commentLi.innerHTML = `${comment.name} commented: ${comment.message}`;
 		deleteCommentbtn.textContent = "Remove Comment";
-		deleteCommentbtn.classList.add("btn", "btn-outline-danger");
 
 		deleteCommentbtn.addEventListener("click", function (e) {
-			commentsDiv.removeChild(e.target.parentNode);
+			commentUl.removeChild(e.target.parentNode);
 			comments.splice(comments.indexOf(comment), 1);
 		});
 
-		commentDiv.appendChild(commentP);
-		commentDiv.appendChild(deleteCommentbtn);
-		commentsDiv.appendChild(commentDiv);
+		commentLi.appendChild(deleteCommentbtn);
+		commentUl.appendChild(commentLi);
 	});
 };
 
