@@ -59,13 +59,14 @@ const renderCommentsContainer = (post) => {
 	const commentMessageInput = document.createElement("input");
 	const commentSubmitbtn = document.createElement("button");
 
-	commentSubmitbtn.textContent = "Submit Comment";
-	commentsContainer.setAttribute("class", "comments-container");
+	commentsContainer.classList.add("comments-container");
+	commentNameInput.classList.add("comment-name", "form-control", "mb-1");
+	commentMessageInput.classList.add("comment-message", "form-control", "mb-1");
 	commentNameInput.setAttribute("placeholder", "Comment Name");
-	commentNameInput.setAttribute("class", "comment-name");
 	commentMessageInput.setAttribute("placeholder", "Comment Message");
-	commentMessageInput.setAttribute("class", "comment-message");
 	commentSubmitbtn.classList.add("btn", "btn-outline-primary");
+
+	commentSubmitbtn.textContent = "Submit Comment";
 
 	commentSubmitbtn.addEventListener("click", function (e) {
 		e.preventDefault();
