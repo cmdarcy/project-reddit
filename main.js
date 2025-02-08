@@ -6,21 +6,28 @@ const postsContainer = document.getElementsByClassName("posts")[0];
 const renderPosts = () => {
 	postsContainer.replaceChildren();
 	posts.forEach((post) => {
-		const postDiv = document.createElement("div");
+		const postCardDiv = document.createElement("div");
+		const cardHeaderDiv = document.createElement("div");
+		const cardBodyDiv = document.createElement("div");
 		const postP = document.createElement("p");
 		const removePostbtn = document.createElement("button");
 		const showCommentsbtn = document.createElement("button");
 		const commentsContainer = renderCommentsContainer(post);
 
-		postP.textContent = `${post.message} - posted by: ${post.name}`;
-		removePostbtn.textContent = "Delete Post";
-		showCommentsbtn.textContent = "Show Comments";
-		postDiv.setAttribute("class", "post");
-		removePostbtn.classList.add("btn", "btn-danger");
+		postCardDiv.classList.add("post", "card", "mb-4");
+		cardHeaderDiv.classList.add("card-header");
+		cardBodyDiv.classList.add("card-body");
+		postP.classList.add("card-text");
+		removePostbtn.classList.add("btn", "btn-danger", "mx-3");
 		showCommentsbtn.classList.add("btn", "btn-outline-info");
 
+		cardHeaderDiv.textContent = `${post.name} posted...`;
+		postP.textContent = post.message;
+		removePostbtn.textContent = "Delete Post";
+		showCommentsbtn.textContent = "Show Comments";
+
 		removePostbtn.addEventListener("click", function (e) {
-			postsContainer.removeChild(e.target.parentNode);
+			postsContainer.removeChild(e.target.parentNode.parentNode);
 			posts.splice(posts.indexOf(post), 1);
 		});
 
@@ -34,11 +41,13 @@ const renderPosts = () => {
 			}
 		});
 
-		postDiv.appendChild(postP);
-		postDiv.appendChild(removePostbtn);
-		postDiv.appendChild(showCommentsbtn);
-		postDiv.appendChild(commentsContainer);
-		postsContainer.appendChild(postDiv);
+		postCardDiv.appendChild(cardHeaderDiv);
+		postCardDiv.appendChild(cardBodyDiv);
+		cardBodyDiv.append(postP);
+		cardHeaderDiv.appendChild(removePostbtn);
+		cardBodyDiv.appendChild(showCommentsbtn);
+		postCardDiv.appendChild(commentsContainer);
+		postsContainer.appendChild(postCardDiv);
 	});
 };
 
