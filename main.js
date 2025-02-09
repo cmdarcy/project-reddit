@@ -32,12 +32,10 @@ const renderPosts = () => {
 		});
 
 		showCommentsbtn.addEventListener("click", function () {
-			if (commentsContainer.className === "comments-container") {
-				console.log("comments should hide");
-				commentsContainer.className = "comments-container d-none";
+			if (commentsContainer.classList.contains("d-none")) {
+				commentsContainer.classList.remove("d-none");
 			} else {
-				console.log("comments should display");
-				commentsContainer.className = "comments-container";
+				commentsContainer.classList.add("d-none");
 			}
 		});
 
