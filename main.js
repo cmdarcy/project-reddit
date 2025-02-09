@@ -19,7 +19,7 @@ const renderPosts = () => {
 		cardBodyDiv.classList.add("card-body");
 		postP.classList.add("card-text");
 		removePostbtn.classList.add("btn", "btn-danger", "mx-3");
-		showCommentsbtn.classList.add("btn", "btn-outline-info");
+		showCommentsbtn.classList.add("btn", "btn-info", "btn-sm");
 
 		cardHeaderDiv.textContent = `${post.name} posted...`;
 		postP.textContent = post.message;
@@ -60,9 +60,15 @@ const renderCommentsContainer = (post) => {
 	const commentMessageInput = document.createElement("input");
 	const commentSubmitbtn = document.createElement("button");
 
-	commentsContainer.classList.add("comments-container");
+	commentsContainer.classList.add(
+		"comments-container",
+		"ms-3",
+		"p-2",
+		"rounded"
+	);
 	commentsDiv.classList.add("card", "mb-4");
 	commentUl.classList.add("list-group", "list-group-flush");
+	commentsForm.classList.add("rounded", "p-2");
 	commentNameInput.classList.add("comment-name", "form-control", "mb-1");
 	commentMessageInput.classList.add("comment-message", "form-control", "mb-1");
 	commentNameInput.setAttribute("placeholder", "Comment Name");
@@ -102,7 +108,12 @@ const renderCommentList = (comments, commentUl) => {
 		const deleteCommentbtn = document.createElement("button");
 
 		commentLi.classList.add("list-group-item");
-		deleteCommentbtn.classList.add("btn", "btn-outline-danger", "mx-2");
+		deleteCommentbtn.classList.add(
+			"btn",
+			"btn-outline-danger",
+			"mx-2",
+			"btn-sm"
+		);
 
 		commentLi.innerHTML = `${comment.name} commented: ${comment.message}`;
 		deleteCommentbtn.textContent = "Remove Comment";

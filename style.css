@@ -1,8 +1,16 @@
-/* borders are temporary for debugging before fully styling */
 .post {
-	border: 2px solid red;
+	background-color: #78d5d7;
 }
 
-.comments-container {
-	border: 2px solid blue;
+.comments-container,
+.comments-container li {
+	background-color: #bed8d4;
+}
+
+.comments-container form {
+	background-color: #f9faf7;
+}
+
+body {
+	background-color: #f9faf7;
 }
